@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import Seo from "../components/Seo";
 
@@ -22,10 +23,21 @@ export default function Home({ results }: { results: RootObject[] }) {
     <div className="container">
       <Seo title="Home" />
       {results?.map((movie) => (
-        <div key={movie.id} className="movie">
-          <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
-          <h4>{movie.original_title}</h4>
-        </div>
+        <Link
+          href={{
+            pathname: `/movies/${movie.id}`,
+            query: {
+              title: movie.title,
+            },
+          }}
+          as={`/movies/${movie.id}`}
+          key={movie.id}
+        >
+          <div className="movie">
+            <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+            <h4>{movie.original_title}</h4>
+          </div>
+        </Link>
       ))}
       <style jsx>{`
         .container {
@@ -33,6 +45,9 @@ export default function Home({ results }: { results: RootObject[] }) {
           grid-template-columns: 1fr 1fr;
           padding: 20px;
           gap: 20px;
+        }
+        .movie {
+          cursor: pointer;
         }
         .movie img {
           max-width: 100%;
