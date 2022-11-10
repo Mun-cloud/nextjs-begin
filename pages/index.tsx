@@ -24,13 +24,7 @@ export default function Home({ results }: { results: RootObject[] }) {
       <Seo title="Home" />
       {results?.map((movie) => (
         <Link
-          href={{
-            pathname: `/movies/${movie.id}`,
-            query: {
-              title: movie.title,
-            },
-          }}
-          as={`/movies/${movie.id}`}
+          href={`/movies/${movie.original_title}/${movie.id}`}
           key={movie.id}
         >
           <div className="movie">

@@ -1,14 +1,14 @@
 import { useRouter } from "next/router";
 
-export default function Detail() {
+export default function Detail({ params }: Param["params"]) {
   const router = useRouter();
-  console.log(router);
-  const fetching = async () => {
-    const results = await (
-      await fetch(`/api/movies/${router.query.id}`)
-    ).json();
-    return results;
+  const [title, id] = params || [];
+  return <h4>{title}</h4>;
+}
+
+type Param = { params: { params: string[] } };
+export function getServerSideProps({ params: { params } }: Param) {
+  return {
+    props: { params },
   };
-  fetching();
-  return <h4>{router.query.title || "Loading..."}</h4>;
 }
